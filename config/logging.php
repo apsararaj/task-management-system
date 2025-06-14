@@ -57,6 +57,12 @@ return [
             'channels' => explode(',', env('LOG_STACK', 'single')),
             'ignore_exceptions' => false,
         ],
+        'tasks' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/tasks-expiry.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => 14,
+        ],
 
         'single' => [
             'driver' => 'single',
@@ -89,7 +95,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
